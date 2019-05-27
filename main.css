@@ -1,0 +1,22 @@
+body {}
+
+.resources-container {}
+
+.resource:nth-child(odd) {
+    background: hsl(0, 0%, 90%)
+}
+
+.resource {
+    display: block;
+    padding: 5px 25px;
+}
+
+/*fixes*/
+
+#main-content-wrapper {
+    padding: 0px !important;
+}
+
+#center-top, #course-profile-materials-folders {
+    padding-left: 20px !important;
+}
