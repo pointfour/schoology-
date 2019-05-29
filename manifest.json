@@ -1,12 +1,13 @@
 {
-    "manifest_version": 2,
-    "name": "Schoology++",
-    "version": "0.1",
-    "content_scripts": [{
-        "matches": [
-            "https://pausd.schoology.com/*"
-        ],
-        "js": ["course.js"],
-        "css": ["main.css"]
-    }]
+  "manifest_version": 2,
+  "name": "Schoology++",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": ["https://pausd.schoology.com/course/*"],
+      "js": ["js/scrape.js", "js/course.js"],
+      "css": ["main.css"]
+    }
+  ],
+  "web_accessible_resources": ["/js/*"]
 }

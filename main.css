@@ -1,22 +1,31 @@
-body {}
+body {
+}
 
-.resources-container {}
+.resources-container {
+}
 
 .resource:nth-child(odd) {
-    background: hsl(0, 0%, 90%)
+  background: hsl(0, 0%, 90%);
 }
 
 .resource {
-    display: block;
-    padding: 5px 25px;
+  display: block;
+  padding: 5px 25px;
+  font-size: 14px;
+}
+
+.description-plus {
+  margin: 0px 5px;
+  font-size: 12px;
 }
 
 /*fixes*/
 
 #main-content-wrapper {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 
-#center-top, #course-profile-materials-folders {
-    padding-left: 20px !important;
+#center-top,
+#course-profile-materials-folders {
+  padding-left: 20px !important;
 }
