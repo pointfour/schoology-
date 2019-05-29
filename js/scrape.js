@@ -29,10 +29,8 @@ const Scrape = (() => {
       if (f) ending = `&f=${f}`;
       let data;
       Request.get(`/course/${course}/materials?ajax=1${ending}`, res => {
-        // console.log(`/course/${course}/materials?ajax=1${ending}`);
         let elems = toHtml(JSON.parse(res));
         data = extractData(elems);
-        // console.log(data);
         func(data);
       });
     }
@@ -48,15 +46,28 @@ const UrlExtractor = (() => {
 })();
 
 const Request = (() => {
+  setInterval(() => {
+    if (queue.length) {
+      let x = queue.shift();
+      actuallyGet(x.url, x.func);
+    }
+  }, 500);
+  let queue = [];
   const prefix = "https://pausd.schoology.com";
+  function actuallyGet(url, func) {
+    let http = new XMLHttpRequest();
+    http.onreadystatechange = () => {
+      if (http.readyState == 4 && http.status == 200) func(http.responseText);
+    };
+    http.open("GET", prefix + url, true);
+    http.send(null);
+  }
   return class Request {
     static get(url, func) {
-      let http = new XMLHttpRequest();
-      http.onreadystatechange = () => {
-        if (http.readyState == 4 && http.status == 200) func(http.responseText);
-      };
-      http.open("GET", prefix + url, true);
-      http.send(null);
+      queue.push({
+        url,
+        func
+      });
     }
   };
 })();

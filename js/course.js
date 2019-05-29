@@ -20,14 +20,23 @@ function createSection(data) {
   let ret = elemMaker("div", {
     classList: "resource"
   });
-  let inner = elemMaker("a", {
+  let title = elemMaker("a", {
     href: data.href,
     innerText: data.title
   });
-  ret.appendChild(inner);
+  ret.appendChild(title);
   if (data.folder) {
-    inner.classList = "folder-link";
+    title.classList = "folder-link";
     ret.prepend(createExpandButton());
+    let contents = elemMaker("div", {
+      classList: "content closed"
+    });
+    ret.appendChild(contents);
+    Scrape.layerCourseData(UrlExtractor.getCourse(), data.id, links => {
+      for (let i = 0; i < links.length; i++) {
+        contents.prepend(createSection(links[i]));
+      }
+    });
   }
   return ret;
 }
