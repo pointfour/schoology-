@@ -28,7 +28,8 @@ const Scrape = (() => {
       let ending;
       if (f) ending = `&f=${f}`;
       let data;
-      Request.get(`/course/${course}/materials?ajax=1${ending}`, res => {
+      let url = `/course/${course}/materials?ajax=1${ending}`;
+      Request.get(url, res => {
         let elems = toHtml(JSON.parse(res));
         data = extractData(elems);
         func(data);
@@ -49,6 +50,7 @@ const Request = (() => {
   setInterval(() => {
     if (queue.length) {
       let x = queue.shift();
+      console.log(x.url);
       actuallyGet(x.url, x.func);
     }
   }, 500);
@@ -57,7 +59,12 @@ const Request = (() => {
   function actuallyGet(url, func) {
     let http = new XMLHttpRequest();
     http.onreadystatechange = () => {
-      if (http.readyState == 4 && http.status == 200) func(http.responseText);
+      if (http.readyState == 4 && http.status == 200) {
+        func(http.responseText);
+      }
+      // else {
+      //   Request.get(url, func);
+      // }
     };
     http.open("GET", prefix + url, true);
     http.send(null);
@@ -69,5 +76,19 @@ const Request = (() => {
         func
       });
     }
+  };
+})();
+
+const Cacher = (() => {
+  //https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+  function hash(e) {
+    for (var r = 0, i = 0; i < e.length; i++)
+      (r = (r << 5) - r + e.charCodeAt(i)), (r &= r);
+    return r;
+  }
+  Cacher.init();
+  return class Cacher {
+    static init() {}
+    static store(url, str) {}
   };
 })();

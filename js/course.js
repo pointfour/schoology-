@@ -24,6 +24,7 @@ function createSection(data) {
     href: data.href,
     innerText: data.title
   });
+  title.id = `${data.id}++`;
   ret.appendChild(title);
   if (data.folder) {
     title.classList = "folder-link";
@@ -37,6 +38,8 @@ function createSection(data) {
         contents.prepend(createSection(links[i]));
       }
     });
+  } else {
+    title.setAttribute("target", "_blank");
   }
   return ret;
 }
@@ -49,13 +52,17 @@ function createExpandButton() {
     classList: "triangle-right tringle"
   });
   btn.appendChild(tringle);
+  let content;
   btn.addEventListener("click", e => {
+    if (!content) content = btn.parentElement.querySelector(".content");
     if (tringle.classList.contains("triangle-right")) {
-      tringle.classList.remove("triangle-right");
-      tringle.classList.add("triangle-down");
+      tringle.classList = "triangle-down tringle";
+      content.classList.remove("closed");
+      content.classList.add("opened");
     } else {
-      tringle.classList.add("triangle-right");
-      tringle.classList.remove("triangle-down");
+      tringle.classList = "triangle-right tringle";
+      content.classList.add("closed");
+      content.classList.remove("opened");
     }
   });
   return btn;
