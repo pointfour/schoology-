@@ -11,34 +11,38 @@ const Scrape = (() => {
     for (let i = 0; i < elems.length; i++) {
       datas[i] = extractElemData(elems[i]);
     }
-    console.log(datas);
+    return datas;
   }
   function extractElemData(elem) {
-    console.log(elem);
+    // console.log(elem);
     let theA = elem.querySelector("a");
-    let folder = theA.parentElement.className == "folder-title";
-    let description;
-    let descElement = elem.querySelector(".folder-description,.item-body p");
-    if (descElement && descElement.innerText != theA.innerText)
-      description = descElement.innerText;
     return {
+      id: elem.id.slice(2),
       href: theA.href,
       title: theA.innerText,
-      description,
-      folder
+      folder: theA.parentElement.className == "folder-title"
     };
   }
   return class Scrape {
-    static layerCourseData(course, f) {
+    static layerCourseData(course, f, func) {
       let ending;
       if (f) ending = `&f=${f}`;
       let data;
       Request.get(`/course/${course}/materials?ajax=1${ending}`, res => {
-        console.log(`/course/${course}/materials?ajax=1${ending}`);
+        // console.log(`/course/${course}/materials?ajax=1${ending}`);
         let elems = toHtml(JSON.parse(res));
         data = extractData(elems);
-        console.log(data);
+        // console.log(data);
+        func(data);
       });
+    }
+  };
+})();
+
+const UrlExtractor = (() => {
+  return class UrlExtractor {
+    static getCourse() {
+      return window.location.pathname.split("/")[2];
     }
   };
 })();
