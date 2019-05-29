@@ -25,7 +25,31 @@ function createSection(data) {
     innerText: data.title
   });
   ret.appendChild(inner);
+  if (data.folder) {
+    inner.classList = "folder-link";
+    ret.prepend(createExpandButton());
+  }
   return ret;
+}
+
+function createExpandButton() {
+  let btn = elemMaker("a", {
+    classList: "expand-btn"
+  });
+  let tringle = elemMaker("a", {
+    classList: "triangle-right tringle"
+  });
+  btn.appendChild(tringle);
+  btn.addEventListener("click", e => {
+    if (tringle.classList.contains("triangle-right")) {
+      tringle.classList.remove("triangle-right");
+      tringle.classList.add("triangle-down");
+    } else {
+      tringle.classList.add("triangle-right");
+      tringle.classList.remove("triangle-down");
+    }
+  });
+  return btn;
 }
 
 //utils

@@ -1,7 +1,47 @@
 body {
 }
 
-.resources-container {
+.resources-container .folder-link {
+  transform: translateX(-19px);
+  display: inline-block;
+}
+
+.expand-btn {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  transform: translate(-22px, 4px);
+  background: transparent;
+  cursor: pointer;
+}
+
+.tringle {
+  --tcolor: #007bff;
+  width: 0;
+  height: 0;
+  font-size: 0px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-style: solid;
+  transform: translate(-50%, -50%);
+}
+
+/*
+http://apps.eky.hk/css-triangle-generator/
+*/
+.triangle-right {
+  /*19 px triangle*/
+  border-width: 9.5px 0 9.5px 16.5px;
+  border-color: transparent transparent transparent var(--tcolor);
+  transition: border-width 500ms, border-color 500ms;
+}
+
+.triangle-down {
+  border-width: 16.5px 9.5px 0 9.5px;
+  border-color: var(--tcolor) transparent transparent transparent;
+  transition: border-width 500ms, border-color 500ms;
 }
 
 .resource:nth-child(odd) {
@@ -9,9 +49,10 @@ body {
 }
 
 .resource {
+  --text-size: 14px;
   display: block;
   padding: 5px 25px;
-  font-size: 14px;
+  font-size: var(--text-size);
 }
 
 .description-plus {
